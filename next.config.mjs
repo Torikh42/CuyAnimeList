@@ -9,7 +9,6 @@ const nextConfig = {
     },
     webpack: (config, { isServer }) => {
       if (!isServer) {
-        // Sediakan fallback untuk modul Node.js yang tidak tersedia di browser
         config.resolve.fallback = {
           ...config.resolve.fallback,
           fs: false,
