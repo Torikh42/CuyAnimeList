@@ -1,4 +1,4 @@
-import { getAnimeResponse } from "@/app/libs/api-libs";
+import { getAnimeResponse } from "@/libs/api-libs";
 import VideoPlayer from "@/components/Utilities/VideoPlayer";
 import Image from "next/image";
 
@@ -41,7 +41,7 @@ const Page = async ({ params: { id } }) => {
         <p className="text-justify text-xl">{anime.data.synopsis}</p>
       </div>
       <div>
-        <VideoPlayer youtubeId={anime.data.trailer.youtube_id}/>
+        <VideoPlayer youtubeId={anime.data.trailer.youtube_id} />
       </div>
     </>
   );
