@@ -5,6 +5,9 @@ const nextConfig = {
         {
           hostname: "cdn.myanimelist.net",
         },
+        {
+          hostname: "avatars.githubusercontent.com"
+        }
       ],
     },
     webpack: (config, { isServer }) => {
