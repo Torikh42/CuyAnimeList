@@ -4,11 +4,13 @@ import Image from "next/image";
 import CollectionButton from "@/components/AnimeList/collectionButton";
 import { authUserSession } from "@/libs/auth-libs";
 import prisma from "@/libs/prisma";
+import CommentInput from "@/components/AnimeList/commentInput";
+import CommentBox from "@/components/AnimeList/commentBox";
 
 const Page = async ({ params }) => {
   // Await params terlebih dahulu
   const { id } = await params;
-  
+
   const anime = await getAnimeResponse(`anime/${id}`);
   const user = await authUserSession();
   const collection = await prisma.collection.findFirst({
@@ -22,7 +24,12 @@ const Page = async ({ params }) => {
           {anime.data.title} - {anime.data.year}
         </h3>
         {!collection && user && (
-          <CollectionButton anime_mal_id={id} user_email={user?.email} anime_image={anime.data.images.webp.image_url} anime_title={anime.data.title} />
+          <CollectionButton
+            anime_mal_id={id}
+            user_email={user?.email}
+            anime_image={anime.data.images.webp.image_url}
+            anime_title={anime.data.title}
+          />
         )}
       </div>
       <div className="pt-4 px-4 flex gap-2 text-color-primary overflow-x-auto">
@@ -52,6 +59,19 @@ const Page = async ({ params }) => {
           className="w-full rounded object-cover"
         />
         <p className="text-justify text-xl">{anime.data.synopsis}</p>
+      </div>
+      <div className="p-4">
+        <p className="text-color-primary text-2xl mb-2">Komentar penonton</p>
+        
+        <CommentBox anime_mal_id={id} />
+        {user && (
+          <CommentInput
+            anime_mal_id={id}
+            user_email={user?.email}
+            username={user?.name}
+            anime_title={anime.data.title}
+          />
+        )}
       </div>
       <div>
         <VideoPlayer youtubeId={anime.data.trailer.youtube_id} />
